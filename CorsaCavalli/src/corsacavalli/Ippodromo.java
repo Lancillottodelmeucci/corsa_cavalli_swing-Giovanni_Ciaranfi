@@ -1,5 +1,8 @@
 package corsacavalli;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -22,19 +25,29 @@ public class Ippodromo implements Runnable{
      * @param f il frame in cui deve mostrarsi l'ippodromo
      */
     public Ippodromo(String n,int num,JFrame f) {
+        JPanel intestazione=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //intestazione.setBackground(Color.red);
+        JPanel pista=new JPanel();
+        //pista.setBackground(Color.blue);
         corsie=new ArrayList<Corsia>();
         classifica=new ArrayList<Corsia>();
         ippodromo=f;
         lungCorsie=300;
-        pan=new JPanel();
-        pan.add(new JLabel(n));
-        pan.setLayout(new GridLayout(num+1,1));
+        pan=new JPanel(new FlowLayout(FlowLayout.LEFT));
+        /*JLabel nome=new JLabel(n);
+        nome.setHorizontalAlignment(JLabel.LEFT);
+        intestazione.add(nome);*/
+        ippodromo.setTitle(n);
+        pista.setLayout(new GridLayout(num+1,1));
         creaCorsie(num);
         JButton avvia=new JButton("Avvia corsa");
         EventoBottoneAvviaCorsa actAvvio=new EventoBottoneAvviaCorsa(this,avvia);
         avvia.addActionListener(actAvvio);
-        pan.add(avvia);
-        disponiCorsie();
+        intestazione.add(avvia);
+        disponiCorsie(pista);
+        intestazione.setPreferredSize(new Dimension(480,40));
+        pan.add(intestazione);
+        pan.add(pista);
         ippodromo.setContentPane(pan);
         indice=0;
     }
@@ -51,9 +64,13 @@ public class Ippodromo implements Runnable{
     /**
      * il metodo che aggiunge le corsie all'ippodromo
      */
-    private void disponiCorsie(){
+    private void disponiCorsie(JPanel p){
+        JLabel numCorsia;
         for(Corsia c:corsie){
-            pan.add(c);
+            numCorsia=new JLabel("C"+c.getNumCorsia());
+            numCorsia.setPreferredSize(new Dimension(30,30));
+            //p.add(numCorsia);
+            p.add(c);
         }
     }
     /**

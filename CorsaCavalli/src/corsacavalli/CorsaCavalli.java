@@ -32,7 +32,7 @@ public class CorsaCavalli {
         pan.add(numCorsie);
         pan.add(btnAvvio);
         ingresso.add(pan);
-        ingresso.setSize(500,600);
+        ingresso.setSize(500,400);
         ingresso.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ingresso.setVisible(true);
         ingresso.setResizable(false);

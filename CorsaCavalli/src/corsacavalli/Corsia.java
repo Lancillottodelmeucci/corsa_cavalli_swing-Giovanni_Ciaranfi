@@ -1,5 +1,6 @@
 package corsacavalli;
 
+import java.awt.Dimension;
 import javax.swing.*;
 
 /**
@@ -25,6 +26,7 @@ public class Corsia extends JProgressBar{
         this.setStringPainted(true);
         numero=n;
         cavallo=new Cavallo("Cavallino"+n,n);
+        this.setPreferredSize(new Dimension(440,30));
     }
     /**
      * il metodo che gestisce l'avanzamento nella corsia in base alla velocità del cavallo
@@ -33,5 +35,8 @@ public class Corsia extends JProgressBar{
         int p=this.getValue();
         this.setValue(p+cavallo.getVelocita());//aumenta della velocità del cavallo
         this.setString(this.getValue()+"m");//aggiunta dell'annotazione metrica
+    }
+    public int getNumCorsia(){
+        return(numero);
     }
 }
