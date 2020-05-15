@@ -36,6 +36,10 @@ public class Corsia extends JProgressBar{
         this.setValue(p+cavallo.getVelocita());//aumenta della velocità del cavallo
         this.setString(this.getValue()+"m");//aggiunta dell'annotazione metrica
     }
+    /**
+     * 
+     * @return il numero della corsia corrente
+     */
     public int getNumCorsia(){
         return(numero);
     }

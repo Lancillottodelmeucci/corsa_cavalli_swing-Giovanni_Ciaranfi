@@ -25,10 +25,8 @@ public class Ippodromo implements Runnable{
      * @param f il frame in cui deve mostrarsi l'ippodromo
      */
     public Ippodromo(String n,int num,JFrame f) {
-        JPanel intestazione=new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        //intestazione.setBackground(Color.red);
-        JPanel pista=new JPanel();
-        //pista.setBackground(Color.blue);
+        JPanel intestazione=new JPanel(new FlowLayout(FlowLayout.RIGHT));//pannello per la gestione della gara
+        JPanel pista=new JPanel();//pannello che contiene le corsie (pannelli divis perchè aventi layout diversi)
         corsie=new ArrayList<Corsia>();
         classifica=new ArrayList<Corsia>();
         ippodromo=f;
