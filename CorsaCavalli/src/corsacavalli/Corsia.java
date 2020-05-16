@@ -25,6 +25,12 @@ public class Corsia extends JPanel{
         this.add(cavallo);
         cavallo.setLocation(0,5);
         cavallo.setSize(30,30);//l'immagine è  grande 30x30 pixel*
+        /*
+        aggiunta dell'immagine dello striscione di fine corsa alla corsia
+        */
+        JLabel arrivo=new JLabel(new ImageIcon("C:\\Users\\giova\\Desktop\\Internet Explorer Windows documenti_vari_scuola\\arrivocavalli.png"));
+        this.add(arrivo);
+        arrivo.setBounds(310,1,20,40-1);
         this.setSize(300,40);
     }
     /**
