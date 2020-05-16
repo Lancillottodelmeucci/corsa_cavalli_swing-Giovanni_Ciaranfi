@@ -16,6 +16,11 @@ public class Cavallo  extends JLabel{
      * @param num il numero di corsia del cavallo
      */
     public Cavallo(String n,int num){
+        /*
+        la selezione dell'immagine con img\\iconacavallo.png non funziona, non
+        so come selezionare un immagine dalla cartella di lavoro: ho provato
+        anche spostando l'immagine (e di conseguenza il path)
+        */
         super(new ImageIcon("C:\\Users\\giova\\Desktop\\Internet Explorer Windows documenti_vari_scuola\\trojan (1).png"));
         nome=n;
         this.num=num;

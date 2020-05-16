@@ -72,13 +72,6 @@ public class Corsia extends JPanel{
         labPos.setBounds(5,5,100,30);
     }
     /**
-     * 
-     * @return il numero della corsia corrente
-     */
-    public int getNumCorsia(){
-        return(numero);
-    }
-    /**
      * disegna i bordi della corsia nella quale il cavallo si muove
      * @param g l'oggetto grafico predefinito
      */
