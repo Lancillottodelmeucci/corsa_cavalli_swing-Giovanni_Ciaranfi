@@ -1,13 +1,14 @@
 package corsacavalli;
 
-import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.Graphics;
 import javax.swing.*;
 
 /**
  * la classe che gestisce la singola corsia
  * @author Giovanni Ciaranfi
  */
-public class Corsia extends JProgressBar{
+public class Corsia extends JPanel{
     private int lunghezza;//la lunghezza della corsia
     private int numero;//il numero della corsia
     private Cavallo cavallo;//il cavallo che gareggia nella corsia
@@ -17,24 +18,52 @@ public class Corsia extends JProgressBar{
      * @param n il numero della corsia
      */
     public Corsia(int l,int n){
-        super();
+        super(null);//layout impostato su null per poter scegliere la posizione degli oggetti
         lunghezza=l;
-        this.setMinimum(0);//imposto il vlore minimo a 0
-        this.setMaximum(l);//imposto il valore massimo alla lunghezza della corsia
-        this.setValue(0);//"posiziona" il cavallo all'inizio
-        this.setString("0m");
-        this.setStringPainted(true);
         numero=n;
         cavallo=new Cavallo("Cavallino"+n,n);
-        this.setPreferredSize(new Dimension(440,30));
+        this.add(cavallo);
+        cavallo.setLocation(0,5);
+        cavallo.setSize(30,30);//l'immagine è  grande 30x30 pixel*
+        this.setSize(300,40);
     }
     /**
-     * il metodo che gestisce l'avanzamento nella corsia in base alla velocità del cavallo
+     * il metodo che fa avanzare il cavallo
      */
     public void avanza(){
-        int p=this.getValue();
-        this.setValue(p+cavallo.getVelocita());//aumenta della velocità del cavallo
-        this.setString(this.getValue()+"m");//aggiunta dell'annotazione metrica
+        int oldx=(int)cavallo.getLocation().getX();//oldx è la posizione precedente sull'asse x
+        cavallo.setLocation(oldx+1,5);
+    }
+    /**
+     * 
+     * @return il cavallo che gareggia nella corsia
+     */
+    public Cavallo getCavallo(){
+        return(cavallo);
+    }
+    /**
+     * 
+     * @param passi il numero di volte che il cavallo deve avanzare
+     */
+    public void avanza(int passi){
+        for(int i=0;i<passi;i++){
+            avanza();
+            /*
+            il tempo di attesa serve per non far "scattare il cavallo", ma a farlo proseguire passo per passo
+            */
+            try{
+            Thread.currentThread().sleep(20);
+            }catch(InterruptedException ex){}
+        }
+    }
+    /**
+     * il metodo che aggiunge l'etichetta nella corsia con cui indicare la posizione di arrivo del cavallo
+     * @param p la posizione nella classifica
+     */
+    public void mostraArrivo(int p){
+        JLabel labPos=new JLabel("Arrivato "+p+"°");
+        this.add(labPos);
+        labPos.setBounds(5,5,100,30);
     }
     /**
      * 
@@ -42,5 +71,15 @@ public class Corsia extends JProgressBar{
      */
     public int getNumCorsia(){
         return(numero);
+    }
+    /**
+     * disegna i bordi della corsia nella quale il cavallo si muove
+     * @param g l'oggetto grafico predefinito
+     */
+    @Override
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.setColor(Color.black);
+        g.drawRect(0,0,300+30,40);
     }
 }

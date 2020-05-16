@@ -1,6 +1,5 @@
 package corsacavalli;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -32,9 +31,6 @@ public class Ippodromo implements Runnable{
         ippodromo=f;
         lungCorsie=300;
         pan=new JPanel(new FlowLayout(FlowLayout.LEFT));
-        /*JLabel nome=new JLabel(n);
-        nome.setHorizontalAlignment(JLabel.LEFT);
-        intestazione.add(nome);*/
         ippodromo.setTitle(n);
         pista.setLayout(new GridLayout(num+1,1));
         creaCorsie(num);
@@ -44,9 +40,14 @@ public class Ippodromo implements Runnable{
         intestazione.add(avvia);
         disponiCorsie(pista);
         intestazione.setPreferredSize(new Dimension(480,40));
+        pista.setPreferredSize(new Dimension(480,corsie.size()*60));
         pan.add(intestazione);
         pan.add(pista);
         ippodromo.setContentPane(pan);
+        /*
+        imposto la dimensione della finestra in base alle necessità
+        */
+        ippodromo.setSize(500,(int)intestazione.getSize().getHeight()+(int)pista.getSize().getHeight()+10);
         indice=0;
     }
     /**
@@ -63,11 +64,7 @@ public class Ippodromo implements Runnable{
      * il metodo che aggiunge le corsie all'ippodromo
      */
     private void disponiCorsie(JPanel p){
-        JLabel numCorsia;
         for(Corsia c:corsie){
-            numCorsia=new JLabel("C"+c.getNumCorsia());
-            numCorsia.setPreferredSize(new Dimension(30,30));
-            //p.add(numCorsia);
             p.add(c);
         }
     }
@@ -90,23 +87,28 @@ public class Ippodromo implements Runnable{
         alla fine. Nel caso in cui avanzasse più velocemente, e arrivasse al
         massimo consentito prima, la condizione vera termina il ciclo
         */
+        int avanzamento;
         for(int i=0;i<lungCorsie;i++){
-            c.avanza();
-            if(c.getValue()==lungCorsie){
+            avanzamento=(int)(Math.random()*10+1);
+            if(c.getCavallo().getLocation().getX()+avanzamento>=lungCorsie){
+                c.avanza(lungCorsie-(int)c.getCavallo().getLocation().getX());
                 break;
             }
+            else
+                c.avanza(avanzamento);//l'avanzamento viene fatto con differenti velocità per aumentare la realtà
             try{
                 Thread.sleep(100);
             }
             catch(InterruptedException ex){}
         }
         /*
-        aggiunta alla classifica ad ogni arrivo alla fine della corsia
+        aggiunta alla classifica ad ogni arrivo di un cavallo alla fine della
+        corsia e inserimento della label che mostra la posizione
         */
         synchronized(classifica){
             classifica.add(c);
+            c.mostraArrivo(classifica.indexOf(c)+1);
         }
-        c.setString("Arrivato "+(classifica.indexOf(c)+1)+"°");
     }
     /**
      * 
