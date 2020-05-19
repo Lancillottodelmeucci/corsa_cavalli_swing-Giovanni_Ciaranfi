@@ -30,7 +30,7 @@ public class Corsia extends JPanel{
         */
         JLabel arrivo=new JLabel(new ImageIcon("C:\\Users\\giova\\Desktop\\Internet Explorer Windows documenti_vari_scuola\\arrivocavalli.png"));
         this.add(arrivo);
-        arrivo.setBounds(310,1,20,40-1);
+        arrivo.setBounds(lunghezza+10,1,20,40-1);
         this.setSize(300,40);
     }
     /**
@@ -54,12 +54,20 @@ public class Corsia extends JPanel{
     public void avanza(int passi){
         for(int i=0;i<passi;i++){
             avanza();
+//            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             /*
             il tempo di attesa serve per non far "scattare il cavallo", ma a farlo proseguire passo per passo
             */
-            try{
-            Thread.currentThread().sleep(20);
-            }catch(InterruptedException ex){}
+//            try{
+//            Thread.currentThread().sleep(30);
+//            }catch(InterruptedException ex){}
+//            Thread.currentThread().setPriority(Thread.NORM_PRIORITY);
+//            Timer t=new Timer(1000,null);
+//            t.start();
+            long a=0;
+            while(a<20000000){
+                a++;
+            }
         }
     }
     /**
@@ -79,6 +87,6 @@ public class Corsia extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.black);
-        g.drawRect(0,0,300+30,40);
+        g.drawRect(0,0,lunghezza+30,40);
     }
 }
