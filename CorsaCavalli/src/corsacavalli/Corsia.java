@@ -43,7 +43,20 @@ public class Corsia extends JPanel{
         catch (IOException ex){}
         this.add(arrivo);
         arrivo.setBounds(lunghezza+10,1,20,40-1);
-        this.setSize(300,40);
+        this.setSize(350,40);
+    }
+    public void impostaPodio(int p){
+        if(p>3){
+            return;
+        }
+        String nomeImg=p+"posto.png";
+        JLabel podio=null;
+        try{
+            podio=new JLabel(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/"+nomeImg))));
+        }
+        catch (IOException ex) {}
+        this.add(podio);
+        podio.setBounds(lunghezza+10,0,80,40);
     }
     /**
      * il metodo che fa avanzare il cavallo

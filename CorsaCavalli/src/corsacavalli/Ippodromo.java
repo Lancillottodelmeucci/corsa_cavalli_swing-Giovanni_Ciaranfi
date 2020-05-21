@@ -178,6 +178,7 @@ public class Ippodromo implements Runnable{
         synchronized(classifica){
             classifica.add(c);
             c.mostraArrivo(classifica.indexOf(c)+1);
+            c.impostaPodio(classifica.indexOf(c)+1);
             if(classifica.size()==corsie.size()){
                 btnAPC.setText("Terminata");
                 btnAPC.setEnabled(false);
