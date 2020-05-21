@@ -1,5 +1,7 @@
 package corsacavalli;
 
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -15,13 +17,13 @@ public class Cavallo  extends JLabel{
      * @param n il nome del cavallo
      * @param num il numero di corsia del cavallo
      */
-    public Cavallo(String n,int num){
+    public Cavallo(String n,int num) throws IOException{
         /*
         la selezione dell'immagine con img\\iconacavallo.png non funziona, non
         so come selezionare un immagine dalla cartella di lavoro: ho provato
         anche spostando l'immagine (e di conseguenza il path)
         */
-        super(new ImageIcon("C:\\Users\\giova\\Desktop\\Internet Explorer Windows documenti_vari_scuola\\trojan (1).png"));
+        super(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/iconacavallo.png"))));
         nome=n;
         this.num=num;
         velocita=(int)(Math.random()*10+1);//creo una velocità tra 1 e 10 per rendere più reale la corsa

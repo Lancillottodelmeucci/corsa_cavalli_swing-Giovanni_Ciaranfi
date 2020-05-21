@@ -1,7 +1,12 @@
 package corsacavalli;
 
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -21,14 +26,21 @@ public class Corsia extends JPanel{
         super(null);//layout impostato su null per poter scegliere la posizione degli oggetti
         lunghezza=l;
         numero=n;
-        cavallo=new Cavallo("Cavallino"+n,n);
+        try{
+            cavallo=new Cavallo("Cavallino"+n,n);
+        }
+        catch (IOException ex){}
         this.add(cavallo);
         cavallo.setLocation(0,5);
         cavallo.setSize(30,30);//l'immagine è  grande 30x30 pixel*
         /*
         aggiunta dell'immagine dello striscione di fine corsa alla corsia
         */
-        JLabel arrivo=new JLabel(new ImageIcon("C:\\Users\\giova\\Desktop\\Internet Explorer Windows documenti_vari_scuola\\arrivocavalli.png"));
+        JLabel arrivo=null;
+        try{
+            arrivo=new JLabel(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/arrivocavalli.png"))));
+        }
+        catch (IOException ex){}
         this.add(arrivo);
         arrivo.setBounds(lunghezza+10,1,20,40-1);
         this.setSize(300,40);
