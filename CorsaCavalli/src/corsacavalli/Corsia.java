@@ -19,12 +19,12 @@ public class Corsia extends JPanel{
      * @param l la lunghezza della corsia
      * @param n il numero della corsia
      */
-    public Corsia(int l,int n){
+    public Corsia(int l,int n,String nom){
         super(null);//layout impostato su null per poter scegliere la posizione degli oggetti
         lunghezza=l;
         numero=n;
         try{
-            cavallo=new Cavallo("Cavallino"+n,n);
+            cavallo=new Cavallo(nom,n);
         }
         catch (IOException ex){}
         this.add(cavallo);

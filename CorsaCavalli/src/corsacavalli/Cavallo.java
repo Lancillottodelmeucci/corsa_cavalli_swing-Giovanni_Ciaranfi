@@ -62,4 +62,7 @@ public class Cavallo  extends JLabel{
     public int getVelocita(){
         return(velocita);
     }
+    public String getNome(){
+        return(nome);
+    }
 }

@@ -1,6 +1,7 @@
 package corsacavalli;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.*;
 
@@ -47,8 +48,14 @@ public class CorsaCavalli {
         la creazione del bottone di creazione dell'ippodromo
         */
         btnAvvio.setBorderPainted(false);
-        EventoSliderIniziale actSli=new EventoSliderIniziale(numCorsie, sli);
-        EventoBottoneIniziale actBtn=new EventoBottoneIniziale(btnAvvio,ingresso,sli,lunghezza);
+        ArrayList<JTextField> nomi=new ArrayList();
+        for(int i=0;i<10;i++){
+            nomi.add(new JTextField(40));
+            nomi.get(i).setText("Cavallino"+(i+1));
+        }
+        JPanel panNomi=new JPanel();
+        EventoSliderIniziale actSli=new EventoSliderIniziale(numCorsie,sli,nomi,panNomi,ingresso);
+        EventoBottoneIniziale actBtn=new EventoBottoneIniziale(btnAvvio,ingresso,sli,lunghezza,nomi);
         btnAvvio.addActionListener(actBtn);
         sli.addChangeListener(actSli);
         /*
@@ -62,13 +69,23 @@ public class CorsaCavalli {
         lunghezza.setSelectedIndex(4);
         panLung.add(lunghezza);
         pan.add(panLung);
+        
+        for(JTextField t:nomi){
+            panNomi.add(t);
+            t.setVisible(false);
+        }
+        for(int i=0;i<3;i++){
+            nomi.get(i).setVisible(true);
+        }
+        panNomi.setPreferredSize(new Dimension(450,25*3));
+        pan.add(panNomi);
+        
         JPanel panB=new JPanel();
         panB.add(btnAvvio);
         pan.add(panB);
         panB.setPreferredSize(new Dimension(450,50));
         ingresso.add(pan);
-        
-        ingresso.setSize(500,150);
+        ingresso.setSize(500,150+30*3);
         ingresso.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ingresso.setVisible(true);
         ingresso.setResizable(false);

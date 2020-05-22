@@ -1,9 +1,14 @@
 package corsacavalli;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * la classe che gestisce l'avvio della corsa, la la pausa e la ripresa
@@ -36,6 +41,30 @@ public class EventoBottoneAvviaCorsa implements ActionListener{
             btn.setText("Pausa");
             btn.setBackground(new Color(193,234,186));
             ippodromo.cambiaStatoCorsa();
+        }
+        else if(btn.getText().equals("Mostra classifica")){
+            ArrayList<Corsia> lista=ippodromo.getClassifica();
+            ippodromo.nascondi();
+            JFrame classifica=new JFrame("Classifica della gara");
+            JPanel pan=new JPanel();
+            for(Corsia c:lista){
+                int ind=lista.indexOf(c);
+                JLabel lab=new JLabel((ind+1)+"° - "+c.getCavallo().getNome());
+                if(ind<3){
+                    lab.setHorizontalAlignment(ind*2);
+                }
+                else{
+                    lab.setHorizontalAlignment(JLabel.LEFT);
+                }
+                pan.add(lab);
+                lab.setPreferredSize(new Dimension(250,30));
+            }
+//            pan.setSize(180,lista.size()*35);
+            classifica.setContentPane(pan);
+            classifica.setSize(300,lista.size()*50);
+            classifica.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            classifica.setResizable(false);
+            classifica.setVisible(true);
         }
         else{//quando viene premuto la prima volta per avviare la corsa
             ippodromo.avvioCorsa();

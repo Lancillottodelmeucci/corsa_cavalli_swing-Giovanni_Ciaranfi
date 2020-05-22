@@ -1,6 +1,7 @@
 package corsacavalli;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -12,6 +13,8 @@ public class EventoBottoneIniziale implements ActionListener{
     private JFrame frame;//il frame da passare all'ippodromo
     private JSlider slider;//lo slider per il numero di corsie
     private JComboBox box;// la combobox per la dimensione delle corsie
+    ArrayList<JTextField> fields;
+    private ArrayList nomi;
     /**
      * il costruttore parametrizzato
      * @param b il bottone a cui cambiare testo (funzione da rimuovere)
@@ -19,7 +22,7 @@ public class EventoBottoneIniziale implements ActionListener{
      * @param s lo slider da cui prendere il numero di corsie
      * @param box l'elenco a discesa da cui scegliere la dimensione delle corsie
      */
-    public EventoBottoneIniziale(JButton b,JFrame f,JSlider s,JComboBox box){
+    public EventoBottoneIniziale(JButton b,JFrame f,JSlider s,JComboBox box,ArrayList<JTextField> n){
         /*
         utilizzo componenti "statiche" come slider e combobox per evitare la
         generazione di errori da eventuali input errati da parte dell'utente
@@ -28,6 +31,8 @@ public class EventoBottoneIniziale implements ActionListener{
         frame=f;
         slider=s;
         this.box=box;
+        nomi=new ArrayList();
+        fields=n;
     }
     /**
      * il metodo che cambia nome al pulsante e crea il nuovo ippodromo
@@ -38,6 +43,9 @@ public class EventoBottoneIniziale implements ActionListener{
         if(btn.getText().equals("Inizia")){
             btn.setText("Iniziata");
         }
-        Ippodromo i=new Ippodromo("Ippodromo Ciaranfi",slider.getValue(),frame,(int)box.getSelectedItem());
+        for(int i=0;i<slider.getValue();i++){
+            nomi.add(fields.get(i).getText());
+        }
+        Ippodromo i=new Ippodromo("Ippodromo Ciaranfi",slider.getValue(),frame,(int)box.getSelectedItem(),nomi);
     }
 }
