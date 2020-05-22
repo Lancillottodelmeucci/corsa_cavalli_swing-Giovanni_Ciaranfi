@@ -16,7 +16,7 @@ public class Cavallo  extends JLabel{
      * il costruttore parametrizzato, che imposta la velocità del cavallo la sua icona
      * @param n il nome del cavallo
      * @param num il numero di corsia del cavallo
-     * @throws java.io.IOException
+     * @throws java.io.IOException nel caso in cui non trovasse o non riuscisse a caricare l'immagine
      */
     public Cavallo(String n,int num) throws IOException{
         super(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/iconacavallo.png"))));
