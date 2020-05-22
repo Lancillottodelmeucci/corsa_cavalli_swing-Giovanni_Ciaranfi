@@ -65,6 +65,7 @@ public class Corsia extends JPanel{
     public void avanza(){
         int oldx=(int)cavallo.getLocation().getX();//oldx è la posizione precedente sull'asse x
         cavallo.setLocation(oldx+1,5);
+        cavallo.setVisible(true);
     }
     /**
      * 
@@ -90,6 +91,10 @@ public class Corsia extends JPanel{
         JLabel labPos=new JLabel("Arrivato "+p+"°");
         this.add(labPos);
         labPos.setBounds(5,5,100,30);
+        try {
+            cavallo.aggiornaVelocita(p);
+        }
+        catch (IOException ex){}
     }
     /**
      * disegna i bordi della corsia nella quale il cavallo si muove
@@ -99,6 +104,10 @@ public class Corsia extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.black);
+        try{
+            g.drawImage(ImageIO.read(ClassLoader.getSystemResource("img/erba.png")),0,0,lunghezza+30,40,null);
+        }
+        catch(IOException e){}
         g.drawRect(0,0,lunghezza+30,40);
     }
 }

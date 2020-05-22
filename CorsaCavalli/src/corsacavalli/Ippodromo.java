@@ -31,6 +31,7 @@ public class Ippodromo implements Runnable{
      * @param l la lunghezza delle corsie
      */
     public Ippodromo(String n,int num,JFrame f,int l) {
+        JFrame c=iniziaCaricamento(f);
         JPanel intestazione=new JPanel(new FlowLayout(FlowLayout.RIGHT));//pannello per la gestione della gara
         JPanel pista=new JPanel();//pannello che contiene le corsie (pannelli divis perchè aventi layout diversi)
         corsie=new ArrayList<Corsia>();
@@ -65,6 +66,31 @@ public class Ippodromo implements Runnable{
         ippodromo.setSize(lungCorsie+150,(int)intestazione.getSize().getHeight()+(int)pista.getSize().getHeight()+10);
         indice=0;
         statoCorsa=false;//la corsia inizialmente non è avviata
+        fineCaricamento(c);
+    }
+    /**
+     * 
+     * @param f
+     * @return 
+     */
+    public JFrame iniziaCaricamento(JFrame f){
+        f.setVisible(false);
+        JFrame caricamento=new JFrame("Caricamento dell'Ippodromo");
+        caricamento.setSize(500,0);
+        caricamento.setVisible(true);
+        try {
+            Thread.currentThread().sleep(1000);
+        }
+        catch (InterruptedException ex) {}
+        return(caricamento);
+    }
+    /**
+     * 
+     * @param f 
+     */
+    public void fineCaricamento(JFrame f){
+        ippodromo.setVisible(true);
+        f.setVisible(false);
     }
     /**
      * il metodo che crea e inserisce le corsie in un array
@@ -130,7 +156,8 @@ public class Ippodromo implements Runnable{
             while(!statoCorsa){
                 System.out.print("");
             }
-            avanzamento=(int)(Math.random()*10+1);
+//            avanzamento=;
+            avanzamento=c.getCavallo().getVelocita()+(int)(Math.random()*5+1);
             if(c.getCavallo().getLocation().getX()+avanzamento>=lungCorsie){
                 c.avanza(lungCorsie-(int)c.getCavallo().getLocation().getX());
                 break;
@@ -139,7 +166,7 @@ public class Ippodromo implements Runnable{
                 c.avanza(avanzamento);
             }
             try{
-                Thread.sleep(100);
+                Thread.sleep(150);
             }
             catch(InterruptedException ex){}
         }
