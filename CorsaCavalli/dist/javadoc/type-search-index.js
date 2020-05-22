@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"corsacavalli","l":"Cavallo"},{"p":"corsacavalli","l":"CorsaCavalli"},{"p":"corsacavalli","l":"Corsia"},{"p":"corsacavalli","l":"EventoBottoneAvviaCorsa"},{"p":"corsacavalli","l":"EventoBottoneIniziale"},{"p":"corsacavalli","l":"EventoSliderIniziale"},{"p":"corsacavalli","l":"Ippodromo"}]
