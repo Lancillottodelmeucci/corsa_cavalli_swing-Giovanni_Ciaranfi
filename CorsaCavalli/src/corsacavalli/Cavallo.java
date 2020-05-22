@@ -16,16 +16,15 @@ public class Cavallo  extends JLabel{
      * il costruttore parametrizzato, che imposta la velocità del cavallo la sua icona
      * @param n il nome del cavallo
      * @param num il numero di corsia del cavallo
+     * @throws java.io.IOException
      */
     public Cavallo(String n,int num) throws IOException{
-        /*
-        la selezione dell'immagine con img\\iconacavallo.png non funziona, non
-        so come selezionare un immagine dalla cartella di lavoro: ho provato
-        anche spostando l'immagine (e di conseguenza il path)
-        */
         super(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/iconacavallo.png"))));
         nome=n;
         this.num=num;
+        /*
+        la velocità specifica del cavallo ancora non viene usata nella corsa
+        */
         velocita=(int)(Math.random()*10+1);//creo una velocità tra 1 e 10 per rendere più reale la corsa
     }
     /**

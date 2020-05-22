@@ -3,9 +3,6 @@ package corsacavalli;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 
 /**
@@ -15,7 +12,6 @@ import javax.swing.JButton;
 public class EventoBottoneAvviaCorsa implements ActionListener{
     private Ippodromo ippodromo;//l'ippodromo runnable con cui creare i thread
     private JButton btn;//il bottone di avvio da disabilitare
-//    private Vector<Thread> thread;
     /**
      * il costruttore parametrizzato
      * @param i l'ippodromo nel quale viene avviata la corsa
@@ -26,25 +22,22 @@ public class EventoBottoneAvviaCorsa implements ActionListener{
         btn=b;
     }
     /**
-     * il metodo che disabilita il bottone di inizio, e avvia la corsa
+     * il metodo che in base allo stato della corsa gestisce l'avvio, la pausa e la ripresa della stessa
      * @param e l'azione
      */
     @Override
     public void actionPerformed(ActionEvent e){
-//        btn.setEnabled(false);
-        if(btn.getText().equals("Pausa")){
+        if(btn.getText().equals("Pausa")){//se viene premuto quando la corsa è iniziat e in corso di svolgimento
             btn.setText("Riprendi");
             btn.setBackground(new Color(255,209,220));
             ippodromo.cambiaStatoCorsa();
-//            ippodromo.pausaCorsa();
         }
-        else if(btn.getText().equals("Riprendi")){
+        else if(btn.getText().equals("Riprendi")){//se viene premuto quando la corsa è in pausa
             btn.setText("Pausa");
             btn.setBackground(new Color(193,234,186));
             ippodromo.cambiaStatoCorsa();
-//            ippodromo.riprendiCorsa();
         }
-        else{
+        else{//quando viene premuto la prima volta per avviare la corsa
             ippodromo.avvioCorsa();
         }
     }

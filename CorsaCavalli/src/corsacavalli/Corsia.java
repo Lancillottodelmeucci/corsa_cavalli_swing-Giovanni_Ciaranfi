@@ -1,12 +1,9 @@
 package corsacavalli;
 
-import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -45,6 +42,10 @@ public class Corsia extends JPanel{
         arrivo.setBounds(lunghezza+10,1,20,40-1);
         this.setSize(350,40);
     }
+    /**
+     * il metodo che se mostra la classifica all'interno del podio nel caso in cui la posizione sia tra i primi tre
+     * @param p la posizione nella classifica del cavallo
+     */
     public void impostaPodio(int p){
         if(p>3){
             return;
@@ -79,20 +80,6 @@ public class Corsia extends JPanel{
     public void avanza(int passi){
         for(int i=0;i<passi;i++){
             avanza();
-//            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-            /*
-            il tempo di attesa serve per non far "scattare il cavallo", ma a farlo proseguire passo per passo
-            */
-//            try{
-//            Thread.currentThread().sleep(30);
-//            }catch(InterruptedException ex){}
-//            Thread.currentThread().setPriority(Thread.NORM_PRIORITY);
-//            Timer t=new Timer(1000,null);
-//            t.start();
-            long a=0;
-            while(a<20000000){
-                a++;
-            }
         }
     }
     /**

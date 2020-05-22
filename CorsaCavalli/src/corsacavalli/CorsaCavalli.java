@@ -24,6 +24,9 @@ public class CorsaCavalli {
         JLabel numCorsie=new JLabel("3");
         JButton btnAvvio=new JButton("Inizia");//bottone per la creazione dell'ippodromo
         Vector lunghezze=new Vector();
+        /*
+        lo potrò implementare con un ciclo
+        */
         lunghezze.add(100);
         lunghezze.add(150);
         lunghezze.add(200);
@@ -40,13 +43,17 @@ public class CorsaCavalli {
         sli.setMinimum(2);
         sli.setMaximum(10);
         sli.setValue(3);
-        
+        /*
+        la creazione del bottone di creazione dell'ippodromo
+        */
         btnAvvio.setBorderPainted(false);
         EventoSliderIniziale actSli=new EventoSliderIniziale(numCorsie, sli);
         EventoBottoneIniziale actBtn=new EventoBottoneIniziale(btnAvvio,ingresso,sli,lunghezza);
         btnAvvio.addActionListener(actBtn);
         sli.addChangeListener(actSli);
-        
+        /*
+        l'aggiunta dei componenti al pannello di inzio
+        */
         JPanel pan=new JPanel();
         panCors.add(sli);
         panCors.add(numCorsie);
