@@ -30,8 +30,13 @@ public class Ippodromo implements Runnable{
      * @param num il numero di corsie
      * @param f il frame in cui deve mostrarsi l'ippodromo
      * @param l la lunghezza delle corsie
+     * @param nomi l'array dei nomi dei cavalli per la corsa corrente
      */
     public Ippodromo(String n,int num,JFrame f,int l,ArrayList nomi) {
+        /*
+        nascondo momentaneamente il frame dell'ippodromo fino al suo caricamento
+        per evitare di vedere lag neri durante il caricamento
+        */
         JFrame c=iniziaCaricamento(f);
         JPanel intestazione=new JPanel(new FlowLayout(FlowLayout.RIGHT));//pannello per la gestione della gara
         JPanel pista=new JPanel();//pannello che contiene le corsie (pannelli divis perchè aventi layout diversi)
@@ -71,9 +76,9 @@ public class Ippodromo implements Runnable{
         fineCaricamento(c);
     }
     /**
-     * 
-     * @param f
-     * @return 
+     * il metodo che utilizzo per nascondere l'ippodromo e mostrare un frame semplice, per evitare che vi sia l'impressione di chiusura del programma
+     * @param f il frame dell'ippodromo
+     * @return il frame di avviso caricamento
      */
     public JFrame iniziaCaricamento(JFrame f){
         f.setVisible(false);
@@ -88,8 +93,8 @@ public class Ippodromo implements Runnable{
         return(caricamento);
     }
     /**
-     * 
-     * @param f 
+     * il metodo che nasconde il frame di caricamento e mostra nuovamente quello dell'ippodromo
+     * @param f il frame del caricamento
      */
     public void fineCaricamento(JFrame f){
         ippodromo.setVisible(true);
@@ -159,8 +164,7 @@ public class Ippodromo implements Runnable{
             while(!statoCorsa){
                 System.out.print("");
             }
-//            avanzamento=;
-            avanzamento=c.getCavallo().getVelocita()+(int)(Math.random()*5+1);
+            avanzamento=c.getCavallo().getVelocita()+(int)(Math.random()*3);//alla velocità del cavallo viene aggiunto un int random tra 0 e 2
             if(c.getCavallo().getLocation().getX()+avanzamento>=lungCorsie){
                 c.avanza(lungCorsie-(int)c.getCavallo().getLocation().getX());
                 break;
@@ -200,11 +204,14 @@ public class Ippodromo implements Runnable{
     }
     /**
      * 
-     * @return 
+     * @return la classifica della corsa
      */
     public ArrayList<Corsia> getClassifica(){
         return(classifica);
     }
+    /**
+     * il metodo che nasconde il frame dell'ippodromo
+     */
     public void nascondi(){
         ippodromo.setVisible(false);
     }

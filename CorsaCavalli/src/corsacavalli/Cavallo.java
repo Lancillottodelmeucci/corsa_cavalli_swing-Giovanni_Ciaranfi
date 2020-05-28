@@ -27,19 +27,18 @@ public class Cavallo  extends JLabel{
         nome=n;
         this.num=num;
         /*
-        la velocità specifica del cavallo ancora non viene usata nella corsa
+        creo una velocità tra 7 e 8 per rendere più reale la corsa, ma ci sarà
+        comunque un fattore casuale nella corsa
         */
-        velocita=(int)(Math.random()*3+5);//creo una velocità tra 4 e 7 per rendere più reale la corsa
+        velocita=(int)(Math.random()*2+7);
         f=new File("src/cavalli/"+nome+".txt");
         if(f.exists()){
-//            System.out.println("File already exist: " + f.getName());
             Scanner s = new Scanner(f);
             String line = s.nextLine();
             String vString=line.substring(line.indexOf("<v>")+3,line.indexOf("</v>"));
             velocita=Integer.parseInt(vString);
         }
         else if(f.createNewFile()){
-//            System.out.println("File created: " + f.getName());
             FileWriter fW = new FileWriter(f);
             fW.write("<v>"+velocita+"</v>");
             fW.close();
@@ -48,9 +47,14 @@ public class Cavallo  extends JLabel{
             System.out.println("Some error occurred");
         }
     }
+    /**
+     * il metodo che aggiorna la velocità del cavallo sul file con una media tra
+     * quella esistente e quella meritata nella gara svolta
+     * @param p la velocità meritata durante la corsa
+     * @throws IOException nel caso di problemi con il file
+     */
     public void aggiornaVelocita(int p) throws IOException{
         int newVel=Math.round((velocita+(10-p+1))/2);
-//        System.out.println(nome+" "+newVel);
         FileWriter fW = new FileWriter(f,false);
         fW.write("<v>"+newVel+"</v>");
         fW.close();
@@ -62,6 +66,10 @@ public class Cavallo  extends JLabel{
     public int getVelocita(){
         return(velocita);
     }
+    /**
+     * 
+     * @return il nome del cavallo
+     */
     public String getNome(){
         return(nome);
     }

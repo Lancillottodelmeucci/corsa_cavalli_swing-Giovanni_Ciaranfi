@@ -45,26 +45,27 @@ public class EventoBottoneAvviaCorsa implements ActionListener{
         else if(btn.getText().equals("Mostra classifica")){
             ArrayList<Corsia> lista=ippodromo.getClassifica();
             ippodromo.nascondi();
-            JFrame classifica=new JFrame("Classifica della gara");
-            JPanel pan=new JPanel();
-            for(Corsia c:lista){
-                int ind=lista.indexOf(c);
-                JLabel lab=new JLabel((ind+1)+"° - "+c.getCavallo().getNome());
-                if(ind<3){
-                    lab.setHorizontalAlignment(ind*2);
-                }
-                else{
-                    lab.setHorizontalAlignment(JLabel.LEFT);
-                }
-                pan.add(lab);
-                lab.setPreferredSize(new Dimension(250,30));
-            }
-//            pan.setSize(180,lista.size()*35);
-            classifica.setContentPane(pan);
-            classifica.setSize(300,lista.size()*50);
-            classifica.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            classifica.setResizable(false);
-            classifica.setVisible(true);
+            Classifica cla_ssifica=new Classifica(lista);
+//            JFrame classifica=new JFrame("Classifica della gara");
+//            JPanel pan=new JPanel();
+//            for(Corsia c:lista){
+//                int ind=lista.indexOf(c);
+//                JLabel lab=new JLabel((ind+1)+"° - "+c.getCavallo().getNome());
+//                if(ind<3){
+//                    lab.setHorizontalAlignment(ind*2);
+//                }
+//                else{
+//                    lab.setHorizontalAlignment(JLabel.LEFT);
+//                }
+//                pan.add(lab);
+//                lab.setPreferredSize(new Dimension(250,30));
+//            }
+////            pan.setSize(180,lista.size()*35);
+//            classifica.setContentPane(pan);
+//            classifica.setSize(300,lista.size()*50);
+//            classifica.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            classifica.setResizable(false);
+//            classifica.setVisible(true);
         }
         else{//quando viene premuto la prima volta per avviare la corsa
             ippodromo.avvioCorsa();

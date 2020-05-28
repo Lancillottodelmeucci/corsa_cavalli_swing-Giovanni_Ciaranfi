@@ -12,12 +12,13 @@ import javax.swing.*;
  */
 public class Corsia extends JPanel{
     private int lunghezza;//la lunghezza della corsia
-    private int numero;//il numero della corsia
+    private int numero;//il numero della corsia (ancora non usato)
     private Cavallo cavallo;//il cavallo che gareggia nella corsia
     /**
-     * il costruttore parametrizzato che definisce la barra del progresso
+     * il costruttore parametrizzato che definisce il pannello della corsia
      * @param l la lunghezza della corsia
      * @param n il numero della corsia
+     * @param nom il nome del cavallo
      */
     public Corsia(int l,int n,String nom){
         super(null);//layout impostato su null per poter scegliere la posizione degli oggetti
@@ -29,7 +30,7 @@ public class Corsia extends JPanel{
         catch (IOException ex){}
         this.add(cavallo);
         cavallo.setLocation(0,5);
-        cavallo.setSize(30,30);//l'immagine è  grande 30x30 pixel*
+        cavallo.setSize(30,30);//l'immagine è grande 30x30 pixel*
         /*
         aggiunta dell'immagine dello striscione di fine corsa alla corsia
         */
@@ -75,7 +76,7 @@ public class Corsia extends JPanel{
         return(cavallo);
     }
     /**
-     * 
+     * il metodo che fa avanzare il cavallo di tot volte
      * @param passi il numero di volte che il cavallo deve avanzare
      */
     public void avanza(int passi){
