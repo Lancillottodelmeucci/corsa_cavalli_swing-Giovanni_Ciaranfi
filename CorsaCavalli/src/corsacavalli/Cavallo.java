@@ -11,26 +11,25 @@ import javax.swing.*;
  * la classe del cavallo
  * @author Giovanni Ciaranfi
  */
-public class Cavallo  extends JLabel{
+public class Cavallo  extends JLabel{//da cambiare in AnimaleCorridore
     private String nome;//il nome del cavallo
     private int num;//il numero di corsia del cavallo
     private int velocita;//la velocità di avanzamento del cavallo
-    private File f;
+    private File f;//il file dell'icona del cavallo
+    private Animale animale;//il tipo di animale che deve essere il "Cavallo"
     /**
      * il costruttore parametrizzato, che imposta la velocità del cavallo la sua icona
      * @param n il nome del cavallo
      * @param num il numero di corsia del cavallo
+     * @param a l'animale che gareggia nella corsia
      * @throws java.io.IOException nel caso in cui non trovasse o non riuscisse a caricare l'immagine
      */
-    public Cavallo(String n,int num) throws IOException{
-        super(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/iconacavallo.png"))));
+    public Cavallo(String n,int num,Animale a) throws IOException{
+        super(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/icone_animali/"+a.getAnimale()+".png"))));
         nome=n;
         this.num=num;
-        /*
-        creo una velocità tra 7 e 8 per rendere più reale la corsa, ma ci sarà
-        comunque un fattore casuale nella corsa
-        */
-        velocita=(int)(Math.random()*2+7);
+        animale=a;
+        velocita=animale.getVelocita();//prendo la velocità da quella dell'animale che è predefinito
         f=new File("src/cavalli/"+nome+".txt");
         if(f.exists()){
             Scanner s = new Scanner(f);
@@ -72,5 +71,12 @@ public class Cavallo  extends JLabel{
      */
     public String getNome(){
         return(nome);
+    }
+    /**
+     * 
+     * @return l'animale che gareggia nella corsia
+     */
+    public Animale getAnimale(){
+        return(animale);
     }
 }

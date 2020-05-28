@@ -22,7 +22,8 @@ public class Ippodromo implements Runnable{
     private boolean statoCorsa;//indica lo stato della corsa, true se è in corso, false se è sospesa
     private JButton btnAPC;//bottone avvio, pausa e continua
     private Vector<Thread> thread;//l'insieme dei thread che muovono i cavalli
-    private ArrayList nomi;
+    private ArrayList nomi;//la lista dei nomi degli animali corridori
+    private ArrayList<Animale> animali;//la lista degli 
     
     /**
      * il costruttore parametrizzato che definisce il layout dell'ippodromo
@@ -32,7 +33,7 @@ public class Ippodromo implements Runnable{
      * @param l la lunghezza delle corsie
      * @param nomi l'array dei nomi dei cavalli per la corsa corrente
      */
-    public Ippodromo(String n,int num,JFrame f,int l,ArrayList nomi) {
+    public Ippodromo(String n,int num,JFrame f,int l,ArrayList nomi,ArrayList animali) {
         /*
         nascondo momentaneamente il frame dell'ippodromo fino al suo caricamento
         per evitare di vedere lag neri durante il caricamento
@@ -45,6 +46,7 @@ public class Ippodromo implements Runnable{
         ippodromo=f;
         lungCorsie=l;
         this.nomi=nomi;
+        this.animali=animali;
         pan=new JPanel(new FlowLayout(FlowLayout.LEFT));
         ippodromo.setTitle(n);
         pista.setLayout(new GridLayout(num+1,1));
@@ -80,7 +82,7 @@ public class Ippodromo implements Runnable{
      * @param f il frame dell'ippodromo
      * @return il frame di avviso caricamento
      */
-    public JFrame iniziaCaricamento(JFrame f){
+    private JFrame iniziaCaricamento(JFrame f){
         f.setVisible(false);
         JFrame caricamento=new JFrame("Caricamento dell'Ippodromo");
         caricamento.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,7 +98,7 @@ public class Ippodromo implements Runnable{
      * il metodo che nasconde il frame di caricamento e mostra nuovamente quello dell'ippodromo
      * @param f il frame del caricamento
      */
-    public void fineCaricamento(JFrame f){
+    private void fineCaricamento(JFrame f){
         ippodromo.setVisible(true);
         f.setVisible(false);
     }
@@ -106,7 +108,7 @@ public class Ippodromo implements Runnable{
      */
     private void creaCorsie(int n){
         for(int i=0;i<n;i++){
-            Corsia c=new Corsia(lungCorsie,i+1,nomi.get(i).toString());
+            Corsia c=new Corsia(lungCorsie,i+1,nomi.get(i).toString(),animali.get(i));
             corsie.add(c);
         }
     }

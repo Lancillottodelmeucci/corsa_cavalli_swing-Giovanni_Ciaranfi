@@ -19,13 +19,14 @@ public class Corsia extends JPanel{
      * @param l la lunghezza della corsia
      * @param n il numero della corsia
      * @param nom il nome del cavallo
+     * @param a l'animale che gareggia nella corsia
      */
-    public Corsia(int l,int n,String nom){
+    public Corsia(int l,int n,String nom,Animale a){
         super(null);//layout impostato su null per poter scegliere la posizione degli oggetti
         lunghezza=l;
         numero=n;
         try{
-            cavallo=new Cavallo(nom,n);
+            cavallo=new Cavallo(nom,n,a);
         }
         catch (IOException ex){}
         this.add(cavallo);
@@ -105,8 +106,8 @@ public class Corsia extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.setColor(Color.black);
-        try{
-            g.drawImage(ImageIO.read(ClassLoader.getSystemResource("img/erba.png")),0,0,lunghezza+30,40,null);
+        try{//in base alla specie dell'animale la pista cambia (erba/acqua/aria?)
+            g.drawImage(ImageIO.read(ClassLoader.getSystemResource(cavallo.getAnimale().getSpecie().equalsIgnoreCase("acquatica")?"img/acqua.png":"img/erba.png")),0,0,lunghezza+30,40,null);
         }
         catch(IOException e){}
         g.drawRect(0,0,lunghezza+30,40);

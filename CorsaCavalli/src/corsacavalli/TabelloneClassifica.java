@@ -24,6 +24,11 @@ public class TabelloneClassifica extends JFrame{
                 int ind=lista.indexOf(c);
                 JLabel lab=new JLabel((ind+1)+"° - "+c.getCavallo().getNome());
                 if(ind<3){
+                    /*
+                    anche se un po' brutto l'allineamento è volutamente sfalsato
+                    per dare l'idea di un podio: il primo in alto al centro, il
+                    secondo a metà a sinistra e il terzo in basso a destra.
+                    */
                     lab.setHorizontalAlignment(ind*2);
                 }
                 else{

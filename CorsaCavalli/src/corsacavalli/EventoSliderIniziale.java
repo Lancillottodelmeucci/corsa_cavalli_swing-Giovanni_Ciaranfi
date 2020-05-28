@@ -12,20 +12,26 @@ import javax.swing.event.*;
 public class EventoSliderIniziale implements ChangeListener{
     private JLabel numCorsie;//l'etichetta su cui scrivere il valore dello slider
     private JSlider slider;//lo slider da cui prendere il valore
-    private ArrayList<JTextField> nomi;
-    private JPanel panel;
-    private JFrame frame;
+    private ArrayList<JTextField> nomi;//l'insieme dei field contenenti i nomi degli animali
+    private JPanel panel;//il pannello di cui cambiare la dimensione
+    private JFrame frame;//il frame di cui cambiare la dimensione
+    private ArrayList<JComboBox<String>> animali;//l'insieme delle select contententi il tipo di animale
     /**
      * il costruttore parametrizzato
      * @param p l'etichetta sulla quale mostrare il valore
      * @param s lo slider che viene modificato
+     * @param n l'insieme dei JTextField contenenti i nomi degli animali
+     * @param pan il pannello a cui cambiare la dimensione
+     * @param f il frame a cui cambiare la dimensione
+     * @param a l'insieme delle JComboBox contententi il tipo di animale
      */
-    public EventoSliderIniziale(JLabel p,JSlider s,ArrayList<JTextField> n,JPanel pan,JFrame f){
+    public EventoSliderIniziale(JLabel p,JSlider s,ArrayList<JTextField> n,JPanel pan,JFrame f,ArrayList<JComboBox<String>> a){
         numCorsie=p;
         slider=s;
         nomi=n;
         panel=pan;
         frame=f;
+        animali=a;
     }
     /**
      * il metodo che mostra il valore dello slider nell'etichetta
@@ -37,6 +43,10 @@ public class EventoSliderIniziale implements ChangeListener{
         ordinaCorsie(slider.getValue());
     }
     private void ordinaCorsie(int n){
+        /*
+        metodo da ottimizzare: utilizzare un ciclo solo per modificare
+        contemporaneamente fielde select (visibili/invisibili)
+        */
         for(JTextField f:nomi){
             if(!f.isVisible()&&nomi.indexOf(f)<n){
                 f.setVisible(true);
@@ -45,7 +55,15 @@ public class EventoSliderIniziale implements ChangeListener{
                 f.setVisible(false);
             }
         }
-        panel.setPreferredSize(new Dimension(450,25*n));
-        frame.setSize(500,150+30*n);
+        for(JComboBox f:animali){
+            if(!f.isVisible()&&nomi.indexOf(f)<n){
+                f.setVisible(true);
+            }
+            if(f.isVisible()&&nomi.indexOf(f)>=n){
+                f.setVisible(false);
+            }
+        }
+        panel.setPreferredSize(new Dimension(550,30*n));
+        frame.setSize(600,180+30*n);
     }
 }

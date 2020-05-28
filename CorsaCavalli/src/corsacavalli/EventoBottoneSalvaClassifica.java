@@ -17,9 +17,9 @@ import javax.swing.JButton;
  * @author Giovanni Ciaranfi
  */
 public class EventoBottoneSalvaClassifica implements ActionListener{
-    private ArrayList<Corsia> classifica;
-    private String dataCorsa;
-    private JButton btn;
+    private ArrayList<Corsia> classifica;//la classifica di arrivo
+    private String dataCorsa;//la data in cui finisce la corsa e viene richiesta la classifica
+    private JButton btn;//il bottone per salvare la classifica
     /**
      * il costruttore parametrizzato
      * @param c la lista delle corsie
@@ -59,7 +59,7 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
             fW.close();
         }
         catch (IOException ex) {}
-        btn.setText("Dati salvati");
+        btn.setText("Risultati salvati");
     }
     /**
      * 
