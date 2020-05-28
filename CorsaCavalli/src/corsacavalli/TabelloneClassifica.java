@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 
 /**
  * la classe che gestisce il pannello della classifica finale
  * @author Giovanni Ciaranfi
  */
-public class Classifica extends JFrame{
-    public Classifica(ArrayList<Corsia> lista){
+public class TabelloneClassifica extends JFrame{
+    public TabelloneClassifica(ArrayList<Corsia> lista){
         super("Classifica della gara");
         JPanel pan=new JPanel(new FlowLayout(FlowLayout.CENTER));
             for(Corsia c:lista){
@@ -27,13 +28,14 @@ public class Classifica extends JFrame{
                 pan.add(lab);
                 lab.setPreferredSize(new Dimension(250,30));
             }
-            this.add(pan);
-            this.setSize(300,(lista.size()+1)*40);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setResizable(false);
-            this.setVisible(true);
             /*
             mettere la possibilità di salvare i risultati della partita
             */
+//            pan.add(new JButton("Salva risultati"));
+            this.add(pan);
+            this.setSize(300,(lista.size()+1)*40+40);
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setResizable(false);
+            this.setVisible(true);
     }
 }

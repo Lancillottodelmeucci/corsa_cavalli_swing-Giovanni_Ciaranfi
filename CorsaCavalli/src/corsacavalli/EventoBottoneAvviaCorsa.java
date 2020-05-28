@@ -45,7 +45,7 @@ public class EventoBottoneAvviaCorsa implements ActionListener{
         else if(btn.getText().equals("Mostra classifica")){
             ArrayList<Corsia> lista=ippodromo.getClassifica();
             ippodromo.nascondi();
-            Classifica cla_ssifica=new Classifica(lista);
+            TabelloneClassifica cla_ssifica=new TabelloneClassifica(lista);
 //            JFrame classifica=new JFrame("Classifica della gara");
 //            JPanel pan=new JPanel();
 //            for(Corsia c:lista){
