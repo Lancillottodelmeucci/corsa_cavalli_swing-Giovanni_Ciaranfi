@@ -13,6 +13,10 @@ import javax.swing.JButton;
  * @author Giovanni Ciaranfi
  */
 public class TabelloneClassifica extends JFrame{
+    /**
+     * il costruttore parametrizzato
+     * @param lista la classifica delle corsie
+     */
     public TabelloneClassifica(ArrayList<Corsia> lista){
         super("Classifica della gara");
         JPanel pan=new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -29,9 +33,13 @@ public class TabelloneClassifica extends JFrame{
                 lab.setPreferredSize(new Dimension(250,30));
             }
             /*
-            mettere la possibilità di salvare i risultati della partita
+            aggiunta del bottone che permette di salvare i risultati della
+            partita
             */
-//            pan.add(new JButton("Salva risultati"));
+            JButton btnSalva=new JButton("Salva risultati");
+            EventoBottoneSalvaClassifica actSalva=new EventoBottoneSalvaClassifica(lista,btnSalva);
+            btnSalva.addActionListener(actSalva);
+            pan.add(btnSalva);
             this.add(pan);
             this.setSize(300,(lista.size()+1)*40+40);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

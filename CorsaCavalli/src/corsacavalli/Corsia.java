@@ -111,4 +111,13 @@ public class Corsia extends JPanel{
         catch(IOException e){}
         g.drawRect(0,0,lunghezza+30,40);
     }
+    /**
+     * 
+     * @return le informazioni della corsia
+     */
+    @Override
+    public String toString(){
+        String ret="Corsia "+numero+", cavallo "+cavallo.getNome();
+        return(ret);
+    }
 }
