@@ -32,6 +32,7 @@ public class Ippodromo implements Runnable{
      * @param f il frame in cui deve mostrarsi l'ippodromo
      * @param l la lunghezza delle corsie
      * @param nomi l'array dei nomi dei cavalli per la corsa corrente
+     * @param animali l'array contenente i tipi di animale nelle corsie
      */
     public Ippodromo(String n,int num,JFrame f,int l,ArrayList nomi,ArrayList animali) {
         /*

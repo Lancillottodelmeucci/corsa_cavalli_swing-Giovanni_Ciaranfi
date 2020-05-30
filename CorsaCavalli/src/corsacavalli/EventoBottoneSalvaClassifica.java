@@ -45,6 +45,7 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
      * il metodo che crea il file per il salvataggio dei dati della corsa terminata
      * @param e l'evento di default
      */
+    @Override
     public void actionPerformed(ActionEvent e){
         btn.setEnabled(false);
         File f=new File("src/risultati/"+dataCorsa+".txt");
