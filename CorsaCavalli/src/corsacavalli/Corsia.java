@@ -85,6 +85,19 @@ public class Corsia extends JPanel{
             avanza();
         }
     }
+    public void mostraFine(){
+//        cavallo.iconaFuorigara();//this.remove(cavallo);
+//        cavallo.setBounds(0,0,0,0);//sostituto della rimozione
+        cavallo.fuorigara();
+        cavallo.setBounds(105,5,30,30);
+        JLabel labPos=new JLabel("Fuorigara");
+        this.add(labPos);
+        labPos.setBounds(5,5,100,30);
+        try {
+            cavallo.aggiornaVelocita(0);
+        }
+        catch (IOException ex){}
+    }
     /**
      * il metodo che aggiunge l'etichetta nella corsia con cui indicare la posizione di arrivo del cavallo
      * @param p la posizione nella classifica

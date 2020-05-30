@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -17,6 +19,8 @@ public class Cavallo  extends JLabel{//da cambiare in AnimaleCorridore
     private int velocita;//la velocità di avanzamento del cavallo
     private File f;//il file dell'icona del cavallo
     private Animale animale;//il tipo di animale che deve essere il "Cavallo"
+    private Cavaliere cavaliere;
+    private boolean stato;
     /**
      * il costruttore parametrizzato, che imposta la velocità del cavallo la sua icona
      * @param n il nome del cavallo
@@ -30,12 +34,19 @@ public class Cavallo  extends JLabel{//da cambiare in AnimaleCorridore
         this.num=num;
         animale=a;
         velocita=animale.getVelocita();//prendo la velocità da quella dell'animale che è predefinito
+        cavaliere=new Cavaliere("CavaliereDi"+n);
+        stato=cavaliere.getStato();
         f=new File("src/cavalli/"+nome+".txt");
         if(f.exists()){
             Scanner s = new Scanner(f);
             String line = s.nextLine();
             String vString=line.substring(line.indexOf("<v>")+3,line.indexOf("</v>"));
-            velocita=Integer.parseInt(vString);
+            try{
+                velocita=Integer.parseInt(vString);
+            }
+            catch(NumberFormatException e){
+                velocita=animale.getVelocita();//in caso ci fossero problemi nel file
+            }
         }
         else if(f.createNewFile()){
             FileWriter fW = new FileWriter(f);
@@ -78,5 +89,20 @@ public class Cavallo  extends JLabel{//da cambiare in AnimaleCorridore
      */
     public Animale getAnimale(){
         return(animale);
+    }
+    public boolean getStato(){
+        return(stato);
+    }
+    public void cambiaStato(){
+        stato=stato==false;
+    }
+    public void fuorigara(){
+        JLabel ban=null;
+        try {
+            ban = new JLabel(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/ban.png"))));
+        }
+        catch (IOException ex) {}
+        this.add(ban);
+        ban.setBounds(0,0,30,30);
     }
 }

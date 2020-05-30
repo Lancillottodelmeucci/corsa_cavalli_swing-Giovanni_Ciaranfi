@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -20,13 +21,15 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
     private ArrayList<Corsia> classifica;//la classifica di arrivo
     private String dataCorsa;//la data in cui finisce la corsa e viene richiesta la classifica
     private JButton btn;//il bottone per salvare la classifica
+    private ArrayList<Corsia> infortunati;
     /**
      * il costruttore parametrizzato
-     * @param c la lista delle corsie
+     * @param inGara la lista delle corsie
      * @param b il bottone da disabilitare
      */
-    public EventoBottoneSalvaClassifica(ArrayList<Corsia> c,JButton b){
-        classifica=c;
+    public EventoBottoneSalvaClassifica(ArrayList<Corsia> inGara,ArrayList<Corsia> fuoriGara,JButton b){
+        classifica=inGara;
+        infortunati=fuoriGara;
         GregorianCalendar cal=new GregorianCalendar();
         /*
         utilizzo l'operatore ternario per ogni argomento per ottenere sempre le
@@ -67,11 +70,24 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
      */
     private String stilaClassifica(){
         String ret="";
-        int i=1;
+        int ind=1;
         for(Corsia c:classifica){
-            ret+="Posizione "+i+": "+c.toString()+(i<classifica.size()+1?"\n":"");
-            i++;
+            ret+="Posizione "+ind+": "+c.toString()+"\n";
+            ind++;
         }
+        
+        Iterator<Corsia> i;
+        for(i=infortunati.iterator();i.hasNext();){
+            Corsia c=i.next();
+            ret+=c.toString()+" ha subito un infortunio durante la gara";
+            if(i.hasNext()){
+                ret+="\n";
+            }
+        }
+//        for(Corsia c:infortunati){
+//            ret+=c.toString()+" ha subito un infortunio durante la gara";
+//            if()
+//        }
         return(ret);
     }
 }

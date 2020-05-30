@@ -15,13 +15,13 @@ import javax.swing.JButton;
 public class TabelloneClassifica extends JFrame{
     /**
      * il costruttore parametrizzato
-     * @param lista la classifica delle corsie
+     * @param inGara la classifica delle corsie
      */
-    public TabelloneClassifica(ArrayList<Corsia> lista){
+    public TabelloneClassifica(ArrayList<Corsia> inGara,ArrayList<Corsia> fuoriGara){
         super("Classifica della gara");
         JPanel pan=new JPanel(new FlowLayout(FlowLayout.CENTER));
-            for(Corsia c:lista){
-                int ind=lista.indexOf(c);
+            for(Corsia c:inGara){
+                int ind=inGara.indexOf(c);
                 JLabel lab=new JLabel((ind+1)+"° - "+c.getCavallo().getNome());
                 if(ind<3){
                     /*
@@ -42,11 +42,11 @@ public class TabelloneClassifica extends JFrame{
             partita
             */
             JButton btnSalva=new JButton("Salva risultati");
-            EventoBottoneSalvaClassifica actSalva=new EventoBottoneSalvaClassifica(lista,btnSalva);
+            EventoBottoneSalvaClassifica actSalva=new EventoBottoneSalvaClassifica(inGara,fuoriGara,btnSalva);
             btnSalva.addActionListener(actSalva);
             pan.add(btnSalva);
             this.add(pan);
-            this.setSize(300,(lista.size()+1)*40+40);
+            this.setSize(300,(inGara.size()+1)*40+40);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setResizable(false);
             this.setVisible(true);

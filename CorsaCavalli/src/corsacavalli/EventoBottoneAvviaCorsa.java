@@ -43,9 +43,10 @@ public class EventoBottoneAvviaCorsa implements ActionListener{
             ippodromo.cambiaStatoCorsa();
         }
         else if(btn.getText().equals("Mostra classifica")){
-            ArrayList<Corsia> lista=ippodromo.getClassifica();
+            ArrayList<Corsia> inGara=ippodromo.getClassifica();
+            ArrayList<Corsia> fuoriGara=ippodromo.getFuoriGara();
             ippodromo.nascondi();
-            TabelloneClassifica cla_ssifica=new TabelloneClassifica(lista);
+            TabelloneClassifica cla_ssifica=new TabelloneClassifica(inGara,fuoriGara);
         }
         else{//quando viene premuto la prima volta per avviare la corsa
             ippodromo.avvioCorsa();

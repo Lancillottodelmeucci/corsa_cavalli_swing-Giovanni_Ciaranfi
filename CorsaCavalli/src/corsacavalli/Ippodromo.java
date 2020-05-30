@@ -4,8 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -23,8 +29,10 @@ public class Ippodromo implements Runnable{
     private JButton btnAPC;//bottone avvio, pausa e continua
     private Vector<Thread> thread;//l'insieme dei thread che muovono i cavalli
     private ArrayList nomi;//la lista dei nomi degli animali corridori
-    private ArrayList<Animale> animali;//la lista degli 
-    
+    private ArrayList<Animale> animali;//la lista degli
+    private ArrayList<Corsia> infortunati;
+    private ArrayList<Corsia> corsieInGara;
+    private Vector ippoClone;
     /**
      * il costruttore parametrizzato che definisce il layout dell'ippodromo
      * @param n il nome dell'ippodromo
@@ -32,8 +40,11 @@ public class Ippodromo implements Runnable{
      * @param f il frame in cui deve mostrarsi l'ippodromo
      * @param l la lunghezza delle corsie
      * @param nomi l'array dei nomi dei cavalli per la corsa corrente
+     * @param animali l'array contenente i tipi di animale che gareggiano
      */
     public Ippodromo(String n,int num,JFrame f,int l,ArrayList nomi,ArrayList animali) {
+        ippoClone=new Vector();
+//        ippoClone.add(n);ippoClone.add(num);ippoClone.add(f);ippoClone.add(l);ippoClone.add(nomi);ippoClone.add(animali);
         /*
         nascondo momentaneamente il frame dell'ippodromo fino al suo caricamento
         per evitare di vedere lag neri durante il caricamento
@@ -43,6 +54,7 @@ public class Ippodromo implements Runnable{
         JPanel pista=new JPanel();//pannello che contiene le corsie (pannelli divis perchè aventi layout diversi)
         corsie=new ArrayList<Corsia>();
         classifica=new ArrayList<Corsia>();
+        infortunati=new ArrayList<Corsia>();
         ippodromo=f;
         lungCorsie=l;
         this.nomi=nomi;
@@ -59,6 +71,15 @@ public class Ippodromo implements Runnable{
         btnAPC.setBorderPainted(false);
         EventoBottoneAvviaCorsa actAvvio=new EventoBottoneAvviaCorsa(this,btnAPC);
         btnAPC.addActionListener(actAvvio);
+        JButton btnRel=null;
+        try {
+            btnRel = new JButton(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/reload.png"))));
+        }
+        catch (IOException ex) {}
+        btnRel.setPreferredSize(new Dimension(50,25));
+        btnRel.setBorderPainted(false);
+        btnRel.addActionListener(new EventoBottoneRiavvio(this,ippodromo));
+        intestazione.add(btnRel);
         intestazione.add(btnAPC);
         /*
         disposizione delle corsie
@@ -111,6 +132,7 @@ public class Ippodromo implements Runnable{
             Corsia c=new Corsia(lungCorsie,i+1,nomi.get(i).toString(),animali.get(i));
             corsie.add(c);
         }
+        corsieInGara=new ArrayList<>(corsie);
     }
     /**
      * il metodo che aggiunge le corsie all'ippodromo
@@ -162,9 +184,51 @@ public class Ippodromo implements Runnable{
         massimo consentito prima, la condizione vera termina il ciclo
         */
         int avanzamento;
+        int infortunio;
         for(int i=0;i<lungCorsie;i++){
             while(!statoCorsa){
                 System.out.print("");
+            }
+            infortunio=(int)(Math.random()*50001);
+            switch(infortunio){
+                case 0://infortunio del cavallo (fine corsa)
+                    /*
+                    migliorare la leggibilità mettendo il codice dell'infortunio
+                    in un metodo, esistono solo più casi separati per un
+                    eventuale cambiamento nell'avviso (personalizzabile passando
+                    una stringa)
+                    */
+                    infortunati.add(c);
+                    corsieInGara.remove(c);
+                    ifFinita(c);
+                    c.mostraFine();
+                    return;//Thread.currentThread().interrupt();
+                    //break;
+                case 2500:
+                case 5000://caduta del cavaliere (attesa breve)
+                    try{
+                        Thread.sleep(1850);
+                    }
+                    catch(InterruptedException ex){}
+                    break;
+                case 17500://altro
+                    break;
+                case 32000:
+                case 33000://caduta dell'animale (attesa lunga)
+                    try{
+                        Thread.sleep(3500);
+                    }
+                    catch(InterruptedException ex){}
+                    break;
+                case 41500://altro
+                    break;
+                case 50000://infortunio del cavaliere (fine corsa)
+                    infortunati.add(c);
+                    corsieInGara.remove(c);
+                    ifFinita(c);
+                    c.mostraFine();
+                    return;//Thread.currentThread().interrupt();
+                    //break;
             }
             avanzamento=c.getCavallo().getVelocita()+(int)(Math.random()*3);//alla velocità del cavallo viene aggiunto un int random tra 0 e 2
             if(c.getCavallo().getLocation().getX()+avanzamento>=lungCorsie){
@@ -183,18 +247,34 @@ public class Ippodromo implements Runnable{
         aggiunta alla classifica ad ogni arrivo di un cavallo alla fine della
         corsia e inserimento della label che mostra la posizione
         */
-        synchronized(classifica){
+//        synchronized(classifica){
+//            classifica.add(c);
+//            c.mostraArrivo(classifica.indexOf(c)+1);
+//            c.impostaPodio(classifica.indexOf(c)+1);
+//            /*
+//            nel caso in cui la classifica sia di dimensione uguale alla lista
+//            delle corsie significa che anche l'ultimo cavallo è arrivato a destinazione
+//            */
+//            if(classifica.size()==corsieInGara.size()){
+//                btnAPC.setText("Mostra classifica");
+//                btnAPC.setBackground(new Color(255,209,220));
+//            }
+            ifFinita(c);
+//        }
+    }
+    public synchronized void ifFinita(Corsia c){
+        if(corsieInGara.contains(c)){
             classifica.add(c);
             c.mostraArrivo(classifica.indexOf(c)+1);
             c.impostaPodio(classifica.indexOf(c)+1);
-            /*
-            nel caso in cui la classifica sia di dimensione uguale alla lista
-            delle corsie significa che anche l'ultimo cavallo è arrivato a destinazione
-            */
-            if(classifica.size()==corsie.size()){
-                btnAPC.setText("Mostra classifica");
-                btnAPC.setBackground(new Color(255,209,220));
-            }
+        }
+        /*
+        nel caso in cui la classifica sia di dimensione uguale alla lista
+        delle corsie significa che anche l'ultimo cavallo è arrivato a destinazione
+        */
+        if(classifica.size()==corsieInGara.size()){
+            btnAPC.setText("Mostra classifica");
+            btnAPC.setBackground(new Color(255,209,220));
         }
     }
     /**
@@ -211,10 +291,16 @@ public class Ippodromo implements Runnable{
     public ArrayList<Corsia> getClassifica(){
         return(classifica);
     }
+    public ArrayList<Corsia> getFuoriGara(){
+        return(infortunati);
+    }
     /**
      * il metodo che nasconde il frame dell'ippodromo
      */
     public void nascondi(){
         ippodromo.setVisible(false);
+    }
+    public Vector getIppodromo(){
+        return(ippoClone);
     }
 }
