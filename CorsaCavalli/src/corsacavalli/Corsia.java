@@ -85,9 +85,10 @@ public class Corsia extends JPanel{
             avanza();
         }
     }
+    /**
+     * posiziona l'icona del corridore vicino all'etichetta che segnala il fuorigara dell'animale
+     */
     public void mostraFine(){
-//        cavallo.iconaFuorigara();//this.remove(cavallo);
-//        cavallo.setBounds(0,0,0,0);//sostituto della rimozione
         cavallo.fuorigara();
         cavallo.setBounds(105,5,30,30);
         JLabel labPos=new JLabel("Fuorigara");

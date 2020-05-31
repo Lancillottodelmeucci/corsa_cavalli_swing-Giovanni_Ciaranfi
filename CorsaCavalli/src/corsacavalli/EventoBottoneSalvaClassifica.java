@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 
 /**
@@ -24,7 +22,8 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
     private ArrayList<Corsia> infortunati;
     /**
      * il costruttore parametrizzato
-     * @param inGara la lista delle corsie
+     * @param inGara la lista delle corsie con gli animali in gara
+     * @param fuoriGara la lista delle corsie con gli animali fuorigara
      * @param b il bottone da disabilitare
      */
     public EventoBottoneSalvaClassifica(ArrayList<Corsia> inGara,ArrayList<Corsia> fuoriGara,JButton b){
@@ -48,6 +47,7 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
      * il metodo che crea il file per il salvataggio dei dati della corsa terminata
      * @param e l'evento di default
      */
+    @Override
     public void actionPerformed(ActionEvent e){
         btn.setEnabled(false);
         File f=new File("src/risultati/"+dataCorsa+".txt");
@@ -66,7 +66,7 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
     }
     /**
      * 
-     * @return la classifica da inserire nel file di salvataggio
+     * @return la stringa contenente la classifica da inserire nel file di salvataggio
      */
     private String stilaClassifica(){
         String ret="";
@@ -75,7 +75,6 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
             ret+="Posizione "+ind+": "+c.toString()+"\n";
             ind++;
         }
-        
         Iterator<Corsia> i;
         for(i=infortunati.iterator();i.hasNext();){
             Corsia c=i.next();
@@ -84,10 +83,6 @@ public class EventoBottoneSalvaClassifica implements ActionListener{
                 ret+="\n";
             }
         }
-//        for(Corsia c:infortunati){
-//            ret+=c.toString()+" ha subito un infortunio durante la gara";
-//            if()
-//        }
         return(ret);
     }
 }

@@ -42,6 +42,10 @@ public class EventoSliderIniziale implements ChangeListener{
         numCorsie.setText(""+slider.getValue());
         ordinaCorsie(slider.getValue());
     }
+    /**
+     * il metodo che mostra o nasconde gli animali a seconda della quantità di corsie scelte
+     * @param n il numero di corsie da mostrare
+     */
     private void ordinaCorsie(int n){
         /*
         metodo da ottimizzare: utilizzare un ciclo solo per modificare

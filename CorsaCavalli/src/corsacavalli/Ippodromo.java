@@ -4,14 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -32,7 +26,6 @@ public class Ippodromo implements Runnable{
     private ArrayList<Animale> animali;//la lista degli
     private ArrayList<Corsia> infortunati;
     private ArrayList<Corsia> corsieInGara;
-    private Vector ippoClone;
     /**
      * il costruttore parametrizzato che definisce il layout dell'ippodromo
      * @param n il nome dell'ippodromo
@@ -43,8 +36,6 @@ public class Ippodromo implements Runnable{
      * @param animali l'array contenente i tipi di animale che gareggiano
      */
     public Ippodromo(String n,int num,JFrame f,int l,ArrayList nomi,ArrayList animali) {
-        ippoClone=new Vector();
-//        ippoClone.add(n);ippoClone.add(num);ippoClone.add(f);ippoClone.add(l);ippoClone.add(nomi);ippoClone.add(animali);
         /*
         nascondo momentaneamente il frame dell'ippodromo fino al suo caricamento
         per evitare di vedere lag neri durante il caricamento
@@ -71,15 +62,6 @@ public class Ippodromo implements Runnable{
         btnAPC.setBorderPainted(false);
         EventoBottoneAvviaCorsa actAvvio=new EventoBottoneAvviaCorsa(this,btnAPC);
         btnAPC.addActionListener(actAvvio);
-        JButton btnRel=null;
-        try {
-            btnRel = new JButton(new ImageIcon(ImageIO.read(ClassLoader.getSystemResource("img/reload.png"))));
-        }
-        catch (IOException ex) {}
-        btnRel.setPreferredSize(new Dimension(50,25));
-        btnRel.setBorderPainted(false);
-        btnRel.addActionListener(new EventoBottoneRiavvio(this,ippodromo));
-        intestazione.add(btnRel);
         intestazione.add(btnAPC);
         /*
         disposizione delle corsie
@@ -189,30 +171,40 @@ public class Ippodromo implements Runnable{
             while(!statoCorsa){
                 System.out.print("");
             }
+            /*
+            ad ogni ciclo viene generato un numero che potrebbe scaturire una
+            delle seguenti situazioni indicate con il costrutto switch. Le
+            probabilità sono volutamente molto basse. In futuro potrebbero
+            cambiare in base allo storico di ogni animale
+            */
             infortunio=(int)(Math.random()*50001);
             switch(infortunio){
-                case 0://infortunio del cavallo (fine corsa)
-                    /*
-                    migliorare la leggibilità mettendo il codice dell'infortunio
-                    in un metodo, esistono solo più casi separati per un
-                    eventuale cambiamento nell'avviso (personalizzabile passando
-                    una stringa)
-                    */
-                    infortunati.add(c);
-                    corsieInGara.remove(c);
-                    ifFinita(c);
-                    c.mostraFine();
-                    return;//Thread.currentThread().interrupt();
-                    //break;
+                case 0:
+                case 10:
+                case 100:
+                case 1000:
+                case 10000://infortunio del cavallo (fine corsa)
+                    infortunio(c);
+                    return;
+                case 25:
+                case 75:
+                case 250:
+                case 750:
                 case 2500:
-                case 5000://caduta del cavaliere (attesa breve)
+                case 7500://caduta del cavaliere (attesa breve)
                     try{
                         Thread.sleep(1850);
                     }
                     catch(InterruptedException ex){}
                     break;
-                case 17500://altro
+                case 15000://altro
                     break;
+                case 32:
+                case 33:
+                case 320:
+                case 330:
+                case 3200:
+                case 3300:
                 case 32000:
                 case 33000://caduta dell'animale (attesa lunga)
                     try{
@@ -222,13 +214,13 @@ public class Ippodromo implements Runnable{
                     break;
                 case 41500://altro
                     break;
+                case 5:
+                case 50:
+                case 500:
+                case 5000:
                 case 50000://infortunio del cavaliere (fine corsa)
-                    infortunati.add(c);
-                    corsieInGara.remove(c);
-                    ifFinita(c);
-                    c.mostraFine();
-                    return;//Thread.currentThread().interrupt();
-                    //break;
+                    infortunio(c);
+                    return;
             }
             avanzamento=c.getCavallo().getVelocita()+(int)(Math.random()*3);//alla velocità del cavallo viene aggiunto un int random tra 0 e 2
             if(c.getCavallo().getLocation().getX()+avanzamento>=lungCorsie){
@@ -247,21 +239,22 @@ public class Ippodromo implements Runnable{
         aggiunta alla classifica ad ogni arrivo di un cavallo alla fine della
         corsia e inserimento della label che mostra la posizione
         */
-//        synchronized(classifica){
-//            classifica.add(c);
-//            c.mostraArrivo(classifica.indexOf(c)+1);
-//            c.impostaPodio(classifica.indexOf(c)+1);
-//            /*
-//            nel caso in cui la classifica sia di dimensione uguale alla lista
-//            delle corsie significa che anche l'ultimo cavallo è arrivato a destinazione
-//            */
-//            if(classifica.size()==corsieInGara.size()){
-//                btnAPC.setText("Mostra classifica");
-//                btnAPC.setBackground(new Color(255,209,220));
-//            }
-            ifFinita(c);
-//        }
+        ifFinita(c);
     }
+    /**
+     * il metodo che viene lanciato in caso di infortunio di animale o cavaliere, che rimuove la corsia tra quelle in gara
+     * @param c la corsia dell'infortunato
+     */
+    public void infortunio(Corsia c){
+        infortunati.add(c);
+        corsieInGara.remove(c);
+        ifFinita(c);
+        c.mostraFine();
+    }
+    /**
+     * il metodo che controlla se la corsa è finita, ovvero se il numero delle corsie in gara è uguale a quello della classifica
+     * @param c la corsia che chiama il metodo
+     */
     public synchronized void ifFinita(Corsia c){
         if(corsieInGara.contains(c)){
             classifica.add(c);
@@ -291,6 +284,10 @@ public class Ippodromo implements Runnable{
     public ArrayList<Corsia> getClassifica(){
         return(classifica);
     }
+    /**
+     * 
+     * @return la lista delle corsie che sono fuori dalla gara
+     */
     public ArrayList<Corsia> getFuoriGara(){
         return(infortunati);
     }
@@ -299,8 +296,5 @@ public class Ippodromo implements Runnable{
      */
     public void nascondi(){
         ippodromo.setVisible(false);
-    }
-    public Vector getIppodromo(){
-        return(ippoClone);
     }
 }

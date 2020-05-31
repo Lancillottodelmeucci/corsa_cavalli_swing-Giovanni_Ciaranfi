@@ -65,7 +65,7 @@ public class CorsaCavalli {
         sceltaAnimali.add("Puzzola");
         sceltaAnimali.add("Rinoceronte");
         sceltaAnimali.add("Tartaruga");
-        sceltaAnimali.add("Toro");
+        sceltaAnimali.add("Topo");
         sceltaAnimali.add("Unicorno");
         sceltaAnimali.add("Volpe");
         for(int i=0;i<10;i++){
@@ -96,14 +96,6 @@ public class CorsaCavalli {
             panNomi.add(c);
             panNomi.add(f);
         }
-//        for(JComboBox c:animali){
-//            panNomi.add(c);
-//            c.setVisible(false);
-//        }
-//        for(JTextField t:nomi){
-//            panNomi.add(t);
-//            t.setVisible(false);
-//        }
         for(int i=0;i<3;i++){
             nomi.get(i).setVisible(true);
             animali.get(i).setVisible(true);

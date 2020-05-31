@@ -14,7 +14,7 @@ import javax.swing.JButton;
  */
 public class TabelloneClassifica extends JFrame{
     /**
-     * il costruttore parametrizzato
+     * il costruttore parametrizzato che mostra la classifica delle corsie e se sono fur gara
      * @param inGara la classifica delle corsie
      */
     public TabelloneClassifica(ArrayList<Corsia> inGara,ArrayList<Corsia> fuoriGara){
